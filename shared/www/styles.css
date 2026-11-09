@@ -1,0 +1,139 @@
+body {
+    /* background-color: {CANVAS_BG}; */
+    /* color: {TEXT_COLOUR}; */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.85rem;
+    max-width: 100%;
+}
+
+.layout {
+    display: flex;
+    gap: 20px;
+    padding: 16px;
+}
+
+.bslib-sidebar-layout,
+.bslib-sidebar-layout > .main {
+    min-width: 0;
+}
+
+.bslib-sidebar-layout > .main > *,
+.tab-content,
+.tab-pane {
+    max-width: 100%;
+    min-width: 0;
+}
+
+.shiny-plot-output {
+    max-width: 100%;
+}
+
+.profile-table-wrapper {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.card-header {
+    color: white;
+    background: #2A2A2A !important;
+}
+
+/* Reduce font-size for accordion panel titles */
+.accordion-button {
+    font-size: 0.9rem;
+}
+
+/* Reduce font-size for drop lists in product cards */
+.card select {
+    font-size: 0.75rem;
+}
+
+/* Dim product cards when include checkbox is unchecked */
+.card:has(input[id$="_include"]:not(:checked)) {
+    opacity: 0.4;
+}
+
+/* Profile analysis table styling */
+.profile-analysis-table th:nth-child(3),
+.profile-analysis-table th:nth-child(4),
+.profile-analysis-table th:nth-child(n+5) {
+    text-align: center;
+}
+
+.profile-analysis-table td:nth-child(3),
+.profile-analysis-table td:nth-child(4),
+.profile-analysis-table td:nth-child(n+5) {
+    text-align: center;
+}
+
+/* Importances + Utilities headers */
+.importances-header,
+.utilities-header,
+.pricing-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.importances-title,
+.utilities-title,
+.pricing-title {
+    margin: 0;
+}
+
+/* Push export/download button to the right */
+.importances-header .btn-export,
+.utilities-header .btn-export,
+.pricing-header .btn-export {
+    margin-left: auto;
+    padding: 0.18rem 0.42rem;
+    line-height: 1;
+    border-radius: 0.3rem;
+    min-width: 0;
+}
+
+.importances-header .btn-export .bi,
+.utilities-header .btn-export .bi,
+.pricing-header .btn-export .bi {
+    font-size: 0.8rem;
+}
+
+@media (max-width: 767.98px) {
+    .layout {
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .container-fluid {
+        padding-right: 0.65rem;
+        padding-left: 0.65rem;
+    }
+
+    .card-body {
+        padding: 0.75rem;
+    }
+
+    .profile-analysis-table th,
+    .profile-analysis-table td {
+        padding: 0.45rem 0.6rem !important;
+    }
+
+    .profile-header {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .profile-actions {
+        margin-left: auto;
+    }
+
+    #pricing_tab {
+        height: auto;
+    }
+
+    #pricing_tab .shiny-plot-output {
+        height: clamp(260px, 55vh, 480px) !important;
+    }
+}

@@ -1,0 +1,18 @@
+# Ignore cache files
+__pycache__/
+*.pyc
+
+# Ignore test project workbooks
+shared/data/Icaro test/
+shared/data/wcpd test/
+
+# Ignore existing airline test files
+shared/data/airline_test/airline_test - level utils.csv
+shared/data/airline_test/airline_test - attr importance.csv
+
+# Internal documentation
+Conjoint simulator python app.pptx
+
+# Ignore scrap or test files
+scrap/
+test-playground.ipynb
