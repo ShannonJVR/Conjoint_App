@@ -3981,24 +3981,71 @@ def server(input, output, session):
             current_products = products_df().copy()
 
             if current_products.empty:
-                current_products = BASECASE_DF.copy()
+                return {
+                    "error": (
+                        "No products are included. Please include a "
+                        "product on the Simulator tab before optimising."
+                    )
+                }
+
+            # Normalise product IDs so 2 and "2" match consistently.
+            numeric_ids = pd.to_numeric(
+                current_products["ProductID"],
+                errors="coerce"
+            )
+
+            if numeric_ids.isna().any():
+                return {
+                    "error": (
+                        "Some product IDs are invalid. "
+                        "ProductID must contain numeric product numbers."
+                    )
+                }
+
+            current_products["ProductID"] = numeric_ids.astype(int)
 
             # --------------------------------------------------
-            # Identify selected product
+            # Read the product selected for this run
             # --------------------------------------------------
+            raw_selection = input.optim_product()
+
+            print("\n========== OPTIMISER SELECTION ==========")
+            print("Run button:", input.run_optim())
+            print("Dropdown value:", repr(raw_selection))
+            print(
+                "Available product IDs:",
+                current_products["ProductID"].tolist()
+            )
+
+            if raw_selection is None or str(raw_selection).strip() == "":
+                return {
+                    "error": "Please select a product to optimise."
+                }
+
             try:
-                selected_product = _parse_product_no(
-                    input.optim_product()
-                )
-            except Exception:
                 selected_product = int(
-                    current_products["ProductID"].iloc[0]
+                    str(raw_selection).strip().removeprefix("Product ").strip()
                 )
+            except (TypeError, ValueError):
+                print("ERROR: Could not parse the product selection.")
+                return {
+                    "error": (
+                        "The selected product could not be recognised. "
+                        "Please select it again."
+                    )
+                }
 
             if selected_product not in current_products["ProductID"].tolist():
-                selected_product = int(
-                    current_products["ProductID"].iloc[0]
-                )
+                print("ERROR: Selected product is not included.")
+                return {
+                    "error": (
+                        f"Product {selected_product} is not included "
+                        "in the current simulator configuration."
+                    )
+                }
+
+            print("Product actually used:", selected_product)
+            print("========================================\n")
 
             # --------------------------------------------------
             # Start with current configuration
